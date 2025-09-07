@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Railway Navigation Dashboard</title>
+    <link rel="stylesheet" href="style1.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-train-subway"></i>
+            <h1>आपकाPlatform</h1>
+        </div>
+        <nav class="desktop-nav">
+            <ul>
+                <li><a href="index.html" class="active"> <i class="fas fa-home"> </i> Home</a></li>
+                <li><a href="#"> <i class="fas fa-info-circle"> </i> About</a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+                <li><a href="voice.html"></i> Voice AI</a></li>
+            </ul>
+        </nav>
+        <div class="search-container">
+            <input type="text" placeholder="Search station or facility..." />
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </div>
+        <button id="modeToggle" class="mode-toggle"><i class="fas fa-moon"></i></button>
+        <button class="toggle-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="dropdown-menu">
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="mob-search-container">
+        <input type="text" placeholder="Search for a place" />
+        <button><i class="fas fa-search"></i></button>
+    </div>
+
+    <nav class="options">
+        <button id="startNavigation"><i class="fas fa-map-marker-alt"></i> Start Navigation</button>
+        <button id="setAlarm"><i class="fas fa-bell"></i> Set Alarm</button>
+        <button id="viewSchedule"><i class="fas fa-calendar-alt"></i> View Schedule</button>
+    </nav>
+
+    <main>
+        <section class="station-info">
+            <div class="info-container">
+                <div class="arrival-info">
+                    <div class="card-header">
+                        <h2>Station Information</h2>
+                        <span class="badge">Live</span>
+                         
+                         <!-- <button class="refresh-btn" onclick="refreshPage()">🔄</button> -->
+
+                    </div>
+                    <div class="station-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h3>Next Station</h3>
+                                <p id="nextStation">Howrah Station</p>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h3>Arriving In</h3>
+                                <p id="arrivalTime" class="highlight">--</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="crowd-density">
+                    <div class="card-header">
+                        <h2>Crowd Density</h2>
+                        <button class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                    <div class="crowd-bar">
+                        <div class="optimal-crowd" style="width: 30%;">Optimal</div>
+                        <div class="minimal-crowd" style="width: 20%;">Minimal</div>
+                        <div class="maximal-crowd" style="width: 50%;">Maximal</div>
+                    </div>
+                    <p id="currentCrowd">Current Density: <span class="medium">Medium</span></p>
+                    <div class="crowd-forecast">
+                        <h3>Forecast</h3>
+                        <div class="forecast-times">
+                            <div class="time-slot">
+                                <span>9 AM</span>
+                                <div class="density-indicator low"></div>
+                            </div>
+                            <div class="time-slot">
+                                <span>12 PM</span>
+                                <div class="density-indicator medium"></div>
+                            </div>
+                            <div class="time-slot">
+                                <span>3 PM</span>
+                                <div class="density-indicator high"></div>
+                            </div>
+                            <div class="time-slot">
+                                <span>6 PM</span>
+                                <div class="density-indicator medium"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="facilities">
+                <div class="card-header">
+                    <h2>Facilities Available</h2>
+                    <span class="subtitle">at Howrah Station</span>
+                </div>
+                <div class="facilities-grid">
+                    <div class="facility">
+                        <i class="fas fa-restroom"></i>
+                        <span>Restroom</span>
+                        <div class="facility-status available">Available</div>
+                    </div>
+                    <div class="facility">
+                        <i class="fas fa-utensils"></i>
+                        <span>Food Court</span>
+                        <div class="facility-status available">Available</div>
+                    </div>
+                    <div class="facility">
+                        <i class="fas fa-coffee"></i>
+                        <span>Coffee Shop</span>
+                        <div class="facility-status available">Available</div>
+                    </div>
+                    <div class="facility">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>ATM</span>
+                        <div class="facility-status available">Available</div>
+                    </div>
+                    <div class="facility">
+                        <i class="fas fa-chair"></i>
+                        <span>Waiting Area</span>
+                        <div class="facility-status busy">Busy</div>
+                    </div>
+                    <div class="facility">
+                        <i class="fas fa-wheelchair"></i>
+                        <span>Accessibility</span>
+                        <div class="facility-status available">Available</div>
+                    </div>
+                    <div class="facility">
+                        <i class="fas fa-train"></i>
+                        <span>Platform Info</span>
+                        <div class="facility-status available">Available</div>
+                    </div>
+                    <div class="facility">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Station Map</span>
+                        <div class="facility-status available">Available</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="upcoming-trains">
+            <div class="card-header">
+                <h2>Upcoming Trains</h2>
+                <button class="view-all-btn">View All</button>
+            </div>
+            <div class="trains-list">
+                <div class="train-card">
+                    <div class="train-info">
+                        <div class="train-name">Roukela Vande Bharat Express</div>
+                        <div class="train-number">20871</div>
+                    </div>
+                    <div class="train-time">
+                        <div class="departure">
+                            <span class="time">10:30 AM</span>
+                            <span class="status on-time">On Time</span>
+                        </div>
+                        <div class="platform">Platform 3</div>
+                    </div>
+                </div>
+                <div class="train-card">
+                    <div class="train-info">
+                        <div class="train-name">Mumbai CSMT SF Express</div>
+                        <div class="train-number">12870</div>
+                    </div>
+                    <div class="train-time">
+                        <div class="departure">
+                            <span class="time">11:45 AM</span>
+                            <span class="status delayed">10 min late</span>
+                        </div>
+                        <div class="platform">Platform 1</div>
+                    </div>
+                </div>
+                <div class="train-card">
+                    <div class="train-info">
+                        <div class="train-name">MGR Chennai Central Express</div>
+                        <div class="train-number">02841</div>
+                    </div>
+                    <div class="train-time">
+                        <div class="departure">
+                            <span class="time">1:15 PM</span>
+                            <span class="status on-time">On Time</span>
+                        </div>
+                        <div class="platform">Platform 5</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Railway Navigator</h3>
+                <p>Enhancing your railway travel experience with modern navigation tools.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Help & Support</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/share/1B6RT2DgA9/"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/anubhabsena.s?utm_source=qr&igsh=ZTE5bmE3bGRmZTZq"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Railway Navigator. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <div class="animation-container">
+        <div class="animated-shape"></div>
+        <div class="animated-shape shape-2"></div>
+    </div>
+
+    <div id="alarmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Set Alarm</h2>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="stationName">Destination Station:</label>
+                    <input type="text" id="stationName" placeholder="Enter destination station">
+                </div>
+                <div class="form-group">
+                    <label for="alarmTime">Alarm Time:</label>
+                    <select id="alarmTime">
+                        <option value="5">5 minutes before arrival</option>
+                        <option value="10" selected>10 minutes before arrival</option>
+                        <option value="15">15 minutes before arrival</option>
+                        <option value="30">30 minutes before arrival</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="alarmSound">Choose Alarm Sound:</label>
+                    <div class="sound-options">
+                        <div class="sound-option">
+                            <input type="radio" id="sound1" name="alarmSound" value="sound1" checked>
+                            <label for="sound1">
+                                <i class="fas fa-bell"></i>
+                                <span>Bell</span>
+                                <button class="play-sound" data-sound="sound1"><i class="fas fa-play"></i></button>
+                            </label>
+                        </div>
+                        <div class="sound-option">
+                            <input type="radio" id="sound2" name="alarmSound" value="sound2">
+                            <label for="sound2">
+                                <i class="fas fa-volume-high"></i>
+                                <span>Chime</span>
+                                <button class="play-sound" data-sound="sound2"><i class="fas fa-play"></i></button>
+                            </label>
+                        </div>
+                        <div class="sound-option">
+                            <input type="radio" id="sound3" name="alarmSound" value="sound3">
+                            <label for="sound3">
+                                <i class="fas fa-music"></i>
+                                <span>Melody</span>
+                                <button class="play-sound" data-sound="sound3"><i class="fas fa-play"></i></button>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmAlarm">Set Alarm</button>
+            </div>
+        </div>
+    </div>
+    <script src="script2.js"></script>
+</body>
+
+</html>

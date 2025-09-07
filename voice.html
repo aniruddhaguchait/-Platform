@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Railway Voice Chatbot</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Roboto", sans-serif;
+      }
+
+      body {
+        background: url("voice.jpg") no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+      }
+
+      .overlay {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 450px;
+        width: 100%;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        backdrop-filter: blur(6px);
+      }
+
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 20px;
+      }
+
+      #chat-box {
+        flex-grow: 1;
+        background: #f4f4f4;
+        padding: 15px;
+        border-radius: 10px;
+        height: 300px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+      }
+
+      .message {
+        margin: 10px 0;
+        padding: 10px 15px;
+        border-radius: 20px;
+        max-width: 80%;
+        line-height: 1.5;
+      }
+
+      .user {
+        background-color: #007bff;
+        color: white;
+        align-self: flex-end;
+        text-align: right;
+        margin-left: auto;
+      }
+
+      .bot {
+        background-color: #e0e0e0;
+        color: #333;
+        align-self: flex-start;
+        text-align: left;
+        margin-right: auto;
+      }
+
+      #controls {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      #user-input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        outline: none;
+      }
+
+      button {
+        padding: 10px 15px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      @media (max-width: 500px) {
+        .overlay {
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay">
+      <h1>🚉 Railway Voice Chatbot</h1>
+      <div id="chat-box"></div>
+
+      <div id="controls">
+        <input
+          type="text"
+          id="user-input"
+          placeholder="Ask about platform, restroom, food..."
+        />
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="startListening()">🎤</button>
+      </div>
+    </div>
+
+    <script>
+      const chatBox = document.getElementById("chat-box");
+      const userInput = document.getElementById("user-input");
+
+      const responses = {
+        platform:
+          "Platform 2 has the least crowd. The next train arrives in 8 minutes.",
+        restroom:
+          "The nearest restroom is 50 meters to your right. It's wheelchair accessible.",
+        food: "The food court is near Platform 3. The coffee shop has no wait time right now.",
+        atm: "The SBI ATM is near Platform 2, and the HDFC ATM is near Platform 1.",
+        emergency: "Emergency numbers: 1310 / 1331 / 26602217 (New Complex).",
+        language: "Bengali,Hindi,English all language are available",
+        help: "You can ask me about platforms, restrooms, food, ATMs, emergency, language or train schedules.",
+      };
+
+      function appendMessage(sender, text) {
+        const msg = document.createElement("div");
+        msg.className = `message ${sender}`;
+        msg.textContent = text;
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      function speak(text) {
+        if ("speechSynthesis" in window) {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = "en-US";
+          speechSynthesis.speak(utterance);
+        }
+      }
+
+      function getResponse(message) {
+        const lower = message.toLowerCase();
+        if (lower.includes("platform") || lower.includes("train"))
+          return responses.platform;
+        if (lower.includes("restroom") || lower.includes("toilet"))
+          return responses.restroom;
+        if (
+          lower.includes("food") ||
+          lower.includes("eat") ||
+          lower.includes("coffee")
+        )
+          return responses.food;
+        if (lower.includes("atm")) return responses.atm;
+        if (lower.includes("emergency")) return responses.emergency;
+        return responses.help;
+      }
+
+      function sendMessage() {
+        const msg = userInput.value.trim();
+        if (!msg) return;
+        appendMessage("user", msg);
+
+        const response = getResponse(msg);
+        appendMessage("bot", response);
+        speak(response);
+
+        userInput.value = "";
+      }
+
+      function startListening() {
+        const SpeechRecognition =
+          window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+          alert("Voice recognition not supported in this browser.");
+          return;
+        }
+
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.start();
+
+        appendMessage("bot", "🎤 Listening...");
+
+        recognition.onresult = function (event) {
+          const transcript = event.results[0][0].transcript;
+          appendMessage("user", transcript);
+          const response = getResponse(transcript);
+          appendMessage("bot", response);
+          speak(response);
+        };
+
+        recognition.onerror = function (event) {
+          appendMessage("bot", "❌ Voice error: " + event.error);
+        };
+      }
+    </script>
+  </body>
+</html>
