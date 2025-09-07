@@ -18,8 +18,10 @@ The project provides an intuitive **dashboard interface** for travelers, integra
 ## 🔑 Demo Credentials (for Vercel Deployment)
 
 Use the following demo credentials to log in to the application:
+
 Username: spartans
-Password: Spartans@123
+
+and Password: Spartans@123
 
 Vercel App link: https://railway-project-zeta.vercel.app/
 
